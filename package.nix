@@ -11,6 +11,9 @@ rustPlatform.buildRustPackage {
   '';
   meta = {
     description = "TUI for this NixOS flake: packages, flake inputs, rebuilds, git";
+    homepage = "https://github.com/VEETS5/nixman";
+    license = lib.licenses.gpl3Only;
+    platforms = lib.platforms.linux;
     mainProgram = "nixman";
   };
 }

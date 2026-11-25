@@ -3,6 +3,9 @@ name = "nixman"
 version = "0.1.0"
 edition = "2021"
 description = "TUI for managing a multi-host NixOS flake: packages, flake inputs, rebuilds, git"
+license = "GPL-3.0-only"
+repository = "https://github.com/VEETS5/nixman"
+readme = "README.md"
 
 [dependencies]
 anyhow = "1"

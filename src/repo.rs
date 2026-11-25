@@ -5,7 +5,6 @@ use anyhow::{bail, Context, Result};
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
-pub const USER: &str = "vito";
 
 pub struct Repo {
     pub dir: PathBuf,
@@ -49,9 +48,17 @@ impl Repo {
             PkgList { file: self.dir.join("configuration.nix"), attr: "environment.systemPackages".into(), host: None, home: false },
             PkgList { file: self.dir.join("home/home.nix"), attr: "home.packages".into(), host: None, home: true },
             PkgList { file: host_file.clone(), attr: "environment.systemPackages".into(), host: Some(host.into()), home: false },
-            PkgList { file: host_file, attr: format!("home-manager.users.{USER}.home.packages"), host: Some(host.into()), home: true },
+            PkgList { file: host_file, attr: format!("home-manager.users.{}.home.packages", user()), host: Some(host.into()), home: true },
         ]
     }
+}
+
+/// The home-manager user whose per-host list nixman edits.
+pub fn user() -> String {
+    std::env::var("NIXMAN_USER")
+        .or_else(|_| std::env::var("USER"))
+        .or_else(|_| std::env::var("LOGNAME"))
+        .unwrap_or_else(|_| "root".into())
 }
 
 pub fn home() -> PathBuf {
